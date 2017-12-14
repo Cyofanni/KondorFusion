@@ -2,7 +2,12 @@ package runParser;
 import java.util.*;
 import java.io.*;
 
+
+
 public class Parser implements ParserI{
+
+
+
     public HashMap<KeyForHashing, Double> readRun(String runFile){
         HashMap<KeyForHashing, Double> linesHash = new HashMap<>();
         Scanner run = null;
