@@ -13,5 +13,13 @@ public abstract class ParserAbs {
     abstract protected void readRun(String runFile);
     abstract protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp);  //should accept a score, and a (max,min) couple
 
-    abstract public void readAndNormalize(String runFile);
+    abstract public void readAndNormalize(String runFile); /*interface to the rest of the program*/
+
+    public HashMap<KeyForHashing, Double> getLinesHash() {
+        return linesHash;
+    }
+
+    public List<CustomPair<Double, Double>> getMaxMinPerTopic() {
+        return maxMinPerTopic;
+    }
 }
