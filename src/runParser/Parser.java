@@ -1,12 +1,10 @@
 package runParser;
 import java.util.*;
 import java.io.*;
-
-
+import utils.CustomPair;
 
 public class Parser implements ParserI{
-
-
+    private List<CustomPair<Double, Double>> maxMinPerTopic = new ArrayList();
 
     public HashMap<KeyForHashing, Double> readRun(String runFile){
         HashMap<KeyForHashing, Double> linesHash = new HashMap<>();
