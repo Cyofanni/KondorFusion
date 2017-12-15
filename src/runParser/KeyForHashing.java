@@ -7,4 +7,12 @@ class KeyForHashing{
         topic = t;
         document = d;
     }
+
+    public int getTopic(){
+        return topic;
+    }
+
+    public String getDocument(){
+        return document;
+    }
 }
