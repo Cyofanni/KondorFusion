@@ -2,6 +2,7 @@ package runParser;
 import java.util.*;
 import java.io.*;
 import utils.CustomPair;
+import normalizer.Normalizer;
 
 
 public class Parser extends ParserAbs {
@@ -66,7 +67,8 @@ public class Parser extends ParserAbs {
     }
 
     protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp){
-        return 0d;     //dummy return FIXME
+        Normalizer norm = new Normalizer(score, cp.getFst(), cp.getSnd());
+        return norm.normalize();
     }
 
     public void readAndNormalize(String runFile){
