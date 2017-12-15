@@ -5,16 +5,13 @@ import utils.CustomPair;
 
 
 public class Parser extends ParserAbs {
-    private List<CustomPair<Double, Double>> maxMinPerTopic = new ArrayList();  //stores max and min scores for each topic
-
     /**
      * Reads and parses a file containing retrieval results.
      *
      * @param  runFile  path to run file
      * @return HashMap containing topic and docs id's as key, and scores as values
      */
-    protected HashMap<KeyForHashing, Double> readRun(String runFile){
-        HashMap<KeyForHashing,Double> linesHash = new HashMap<KeyForHashing,Double>();
+    protected void readRun(String runFile){
         Scanner run = null;
         try{
             run = new Scanner(new File(runFile));
@@ -66,11 +63,33 @@ public class Parser extends ParserAbs {
 
         //throw away the first dummy item from maxMinPerTopic
         maxMinPerTopic.remove(0);
-
-        return linesHash;
     }
 
     protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp){
-        return 0d;     //dummy return
+        return 0d;     //dummy return FIXME
+    }
+
+    public void readAndNormalize(String runFile){
+        readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
+        //foreach to normalize everything, through a call to 'normalizerCaller'
+        int topicCursor = -1;    //index for topics, should run over 'maxMinPerTopic'
+        int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
+
+        for(Map.Entry<KeyForHashing,Double> entry : linesHash.entrySet()){
+            KeyForHashing key = entry.getKey();
+            Double value = entry.getValue();
+            int top = key.getTopic();   //current topic from key
+            /*should still detect when the topic changes*/
+            if (top != oldTop){
+                topicCursor++;
+            }
+
+            CustomPair<Double,Double> maxMin = maxMinPerTopic.get(topicCursor);
+            /*now normalize and replace in 'linesHash' as value for 'key'*/
+            Double normalizedScore = normalizerCaller(value, maxMin);
+            linesHash.put(key, normalizedScore);
+
+            oldTop = top;
+        }
     }
 }
