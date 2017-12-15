@@ -10,8 +10,9 @@ public class Parser extends ParserAbs {
      * Reads and parses a file containing retrieval results.
      *
      * @param  runFile  path to run file
-     * @return HashMap containing topic and docs id's as key, and scores as values
+     * @return LinkedHashMap containing topic and docs id's as key, and scores as values
      */
+    @Override
     protected void readRun(String runFile){
         Scanner run = null;
         try{
@@ -56,6 +57,7 @@ public class Parser extends ParserAbs {
             linesHash.put(currKey, score);
 
             oldTop = top;   //set old topic to current topic
+            run.nextLine();  //mandatory instruction
         }
 
         //add the last (max,min) to the list, because it has been skipped by the while loop
@@ -66,11 +68,13 @@ public class Parser extends ParserAbs {
         maxMinPerTopic.remove(0);
     }
 
+    @Override
     protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp){
         Normalizer norm = new Normalizer(score, cp.getFst(), cp.getSnd());
         return norm.normalize();
     }
 
+    @Override
     public void readAndNormalize(String runFile){
         readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
         //foreach to normalize everything, through a call to 'normalizerCaller'
