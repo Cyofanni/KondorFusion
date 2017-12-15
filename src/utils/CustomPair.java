@@ -7,4 +7,12 @@ public class CustomPair<S, T>{
         fst = f;
         snd = s;
     }
+
+    public S getFst() {
+        return fst;
+    }
+
+    public T getSnd() {
+        return snd;
+    }
 }
