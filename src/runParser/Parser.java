@@ -13,7 +13,7 @@ public class Parser extends ParserAbs {
      * @return LinkedHashMap containing topic and docs id's as key, and scores as values
      */
     @Override
-    protected void readRun(String runDirectory){
+    public void readAndNormalize(String runDirectory){
         File[] runFiles = new File(runDirectory).listFiles();
 
         for(int i = 0; i < runFiles.length; i++){
@@ -87,7 +87,7 @@ public class Parser extends ParserAbs {
             maxMinPerTopic.remove(0);
 
             //normalizzazione
-            readAndNormalize(i);
+            normalize(i);
         }
 
 
@@ -100,7 +100,7 @@ public class Parser extends ParserAbs {
     }
 
     @Override
-    public void readAndNormalize(int runIndex){
+    protected void normalize(int runIndex){
         //readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
         //foreach to normalize everything, through a call to 'normalizerCaller'
         int topicCursor = -1;    //index for topics, should run over 'maxMinPerTopic'
