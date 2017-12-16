@@ -59,18 +59,17 @@ public class Parser extends ParserAbs {
                 }
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
-                if(i == 0){
+                if(linesHash.containsKey(currKey)){
+                    Double[] temp = linesHash.get(currKey);
+                    temp[i] = score;
+                    linesHash.put(currKey, temp);
+                }
+                else{
                     Double[] scores = new Double[runFiles.length];
                     scores[i] = score;
                     linesHash.put(currKey, scores);
                 }
-                else{
-                    if(linesHash.containsKey(currKey)){
-                        Double[] temp = linesHash.get(currKey);
-                        temp[i] = score;
 
-                    }
-                }
 
 
                 //linesHash.put(currKey, score);
