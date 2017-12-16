@@ -87,7 +87,7 @@ public class Parser extends ParserAbs {
             maxMinPerTopic.remove(0);
 
             //normalizzazione
-
+            readAndNormalize(i);
         }
 
 

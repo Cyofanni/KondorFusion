@@ -13,7 +13,7 @@ public abstract class ParserAbs {
     abstract protected void readRun(String runFile);
     abstract protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp);  //should accept a score, and a (max,min) couple
 
-    abstract public void readAndNormalize(String runFile); /*interface to the rest of the program*/
+    abstract public void readAndNormalize(int runIndex); /*interface to the rest of the program*/
 
     public LinkedHashMap<KeyForHashing,Double[]> getLinesHash() {
         return linesHash;
