@@ -123,4 +123,17 @@ public class Parser extends ParserAbs {
             oldTop = top;
         }
     }
+
+    public void printMap(){
+        for(Map.Entry<KeyForHashing,Double[]> entry : linesHash.entrySet()){
+            KeyForHashing key = entry.getKey();
+            Double[] values = entry.getValue();
+
+            System.out.print(key.getTopic() + " " + key.getDocument() + " ");
+            for(int i = 0; i < values.length; i++){
+                System.out.print(values[i] + " ");
+            }
+            System.out.println("");
+        }
+    }
 }

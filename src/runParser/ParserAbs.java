@@ -22,4 +22,6 @@ public abstract class ParserAbs {
     public List<CustomPair<Double, Double>> getMaxMinPerTopic() {
         return maxMinPerTopic;
     }
+
+    abstract public void printMap();
 }
