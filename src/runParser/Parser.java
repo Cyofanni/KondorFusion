@@ -60,13 +60,14 @@ public class Parser extends ParserAbs {
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
                 if(i == 0){
-                    ArrayList<Double> scores = new ArrayList<>();
-                    scores.add(score);
+                    Double[] scores = new Double[runFiles.length];
+                    scores[i] = score;
                     linesHash.put(currKey, scores);
                 }
                 else{
                     if(linesHash.containsKey(currKey)){
-                        linesHash.get(currKey).add(score);
+                        Double[] temp = linesHash.get(currKey);
+                        temp[i] = score;
 
                     }
                 }
