@@ -7,7 +7,7 @@ import java.io.*;
 
 
 public abstract class ParserAbs {
-    protected LinkedHashMap<KeyForHashing,Double> linesHash = new LinkedHashMap<KeyForHashing,Double>(); //store the lines read from run file
+    protected LinkedHashMap<KeyForHashing,List<Double>> linesHash = new LinkedHashMap<KeyForHashing,List<Double>>(); //store the lines read from run file
     protected List<CustomPair<Double, Double>> maxMinPerTopic = new ArrayList();  //stores max and min scores for each topi
 
     abstract protected void readRun(String runFile);
@@ -15,7 +15,7 @@ public abstract class ParserAbs {
 
     abstract public void readAndNormalize(String runFile); /*interface to the rest of the program*/
 
-    public LinkedHashMap<KeyForHashing, Double> getLinesHash() {
+    public LinkedHashMap<KeyForHashing,List<Double>> getLinesHash() {
         return linesHash;
     }
 

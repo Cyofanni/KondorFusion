@@ -59,7 +59,20 @@ public class Parser extends ParserAbs {
                 }
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
-                linesHash.put(currKey, score);
+                if(i == 0){
+                    ArrayList<Double> scores = new ArrayList<>();
+                    scores.add(score);
+                    linesHash.put(currKey, scores);
+                }
+                else{
+                    if(linesHash.containsKey(currKey)){
+                        linesHash.get(currKey).add(score);
+
+                    }
+                }
+
+
+                //linesHash.put(currKey, score);
 
                 oldTop = top;   //set old topic to current topic
                 run.nextLine();  //mandatory instruction
@@ -71,6 +84,8 @@ public class Parser extends ParserAbs {
 
             //throw away the first dummy item from maxMinPerTopic
             maxMinPerTopic.remove(0);
+
+
         }
 
 
