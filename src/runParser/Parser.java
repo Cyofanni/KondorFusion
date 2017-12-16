@@ -59,6 +59,7 @@ public class Parser extends ParserAbs {
                 }
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
+
                 if(linesHash.containsKey(currKey)){
                     Double[] temp = linesHash.get(currKey);
                     temp[i] = score;
@@ -85,6 +86,7 @@ public class Parser extends ParserAbs {
             //throw away the first dummy item from maxMinPerTopic
             maxMinPerTopic.remove(0);
 
+            //normalizzazione
 
         }
 
@@ -98,15 +100,15 @@ public class Parser extends ParserAbs {
     }
 
     @Override
-    public void readAndNormalize(String runFile){
-        readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
+    public void readAndNormalize(int runIndex){
+        //readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
         //foreach to normalize everything, through a call to 'normalizerCaller'
         int topicCursor = -1;    //index for topics, should run over 'maxMinPerTopic'
         int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
 
-        for(Map.Entry<KeyForHashing,Double> entry : linesHash.entrySet()){
+        for(Map.Entry<KeyForHashing,Double[]> entry : linesHash.entrySet()){
             KeyForHashing key = entry.getKey();
-            Double value = entry.getValue();
+            Double[] values = entry.getValue();
             int top = key.getTopic();   //current topic from key
             /*should still detect when the topic changes*/
             if (top != oldTop){
@@ -115,8 +117,8 @@ public class Parser extends ParserAbs {
 
             CustomPair<Double,Double> maxMin = maxMinPerTopic.get(topicCursor);
             /*now normalize and replace in 'linesHash' as value for 'key'*/
-            Double normalizedScore = normalizerCaller(value, maxMin);
-            linesHash.put(key, normalizedScore);
+            values[runIndex] = normalizerCaller(values[runIndex], maxMin);
+            linesHash.put(key, values);
 
             oldTop = top;
         }
