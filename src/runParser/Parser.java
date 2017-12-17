@@ -139,7 +139,8 @@ public class Parser extends ParserAbs {
             if (top != oldTop){
                 topicCursor++;
             }
-
+            //test print
+            System.out.println("minmax " + topicCursor);
             CustomPair<Double,Double> maxMin = maxMinCouples.get(topicCursor);
             /*now normalize and replace in 'linesHash' as value for 'key'*/
             values[runIndex] = normalizerCaller(values[runIndex], maxMin);
