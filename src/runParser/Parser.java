@@ -159,7 +159,7 @@ public class Parser extends ParserAbs {
 
     //testing
     public void printMinMaxPerTopic(Map<Integer, CustomPair<Double, Double>> maxMinCouples){
-        System.out.println("Lunghezza della lista: "+maxMinCouples.size());
+        System.out.println("MinMaxPerTopic size: "+maxMinCouples.size());
 
         for (Integer key: maxMinCouples.keySet()) {
             System.out.println("Topic " + key + " minScore = " + maxMinCouples.get(key).getFst() + " maxScore = " + maxMinCouples.get(key).getSnd());
