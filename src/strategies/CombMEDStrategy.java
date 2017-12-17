@@ -22,6 +22,9 @@ public class CombMEDStrategy {
             double sum = 0;
 
             for (int i = 0; i < values.length; i++) {
+                if(values[i] == null){
+                    continue;
+                }
                 sum += values[i];
             }
 

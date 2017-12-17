@@ -23,6 +23,9 @@ public class CombMINStrategy {
             double min = Double.MAX_VALUE;
 
             for(int i = 0; i < values.length; i++){
+                if(values[i] == null){
+                    continue;
+                }
                 if(values[i] < min){
                     min = values[i];
                 }
