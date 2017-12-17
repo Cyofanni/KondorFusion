@@ -33,7 +33,7 @@ public class CombMINStrategy {
 
             if(!results.containsKey(top)){
                 documents = new ArrayList<>();
-                results.put(top, documents)
+                results.put(top, documents);
             }
             else{
                 documents = results.get(top);
