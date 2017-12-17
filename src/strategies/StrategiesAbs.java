@@ -1,13 +1,10 @@
 package strategies;
 
 import utils.CustomPair;
-
-import java.util.Comparator;
 import java.util.List;
 
-public class StrategiesAbs {
-    public List<CustomPair<String, Double>> sort(List<CustomPair<String, Double>> docScores) {
-
+public abstract class StrategiesAbs {
+    public void sort(List<CustomPair<String, Double>> docScores) {
         docScores.sort(new CustomComparator());
     }
 }
