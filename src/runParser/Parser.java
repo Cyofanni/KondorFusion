@@ -59,37 +59,61 @@ public class Parser extends ParserAbs {
                 }
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
+                //just to test
+                System.out.println("Current topic: "+top+" document: "+doc+" key: "+currKey.toString());
+                ///////////
 
                 if(linesHash.containsKey(currKey)){
                     Double[] temp = linesHash.get(currKey);
                     temp[i] = score;
+                    //just to test
+                    System.out.print("KEY ALREDY SEEN -> Scores: ");
+                    for (Double d: temp) {
+                        System.out.print(d+" ");
+                    }
+                    System.out.println("");
+                    //////////////
                     linesHash.put(currKey, temp);
                 }
                 else{
                     Double[] scores = new Double[runFiles.length];
+                    //used to avoid nulls in scores array
+                    double[] tempScores = new double[runFiles.length];
+                    for (int j = 0; j < runFiles.length; j++) {
+                        scores[j] = tempScores[j];
+                    }
                     scores[i] = score;
+                    //just to test
+                    System.out.print("NEW KEY -> Scores: ");
+                    for (Double d: scores) {
+                        System.out.print(d+" ");
+                    }
+                    System.out.println("");
+                    ////////////
                     linesHash.put(currKey, scores);
                 }
 
-
-
                 //linesHash.put(currKey, score);
-
+                //printMaxMinPerTopic(top);
                 oldTop = top;   //set old topic to current topic
                 run.nextLine();  //mandatory instruction
             }
 
+            //just to test
+            System.out.println("end of run "+i);
+            printMap();
+            ////////////
             //add the last (max,min) to the list, because it has been skipped by the while loop
             coupleMaxMin = new CustomPair<>(minScore, maxScore);
             maxMinPerTopic.add(coupleMaxMin);
 
             //throw away the first dummy item from maxMinPerTopic
-            maxMinPerTopic.remove(0);
-
-            //normalizzazione
+            maxMinPerTopic.remove(50*i); //here bug fixed.
+            // previous implementation removed only the first couple from the top. thus (null, null) were still present
+            printMaxMinPerTopic();
+            //normalization
             normalize(i);
         }
-
 
     }
 
@@ -124,16 +148,26 @@ public class Parser extends ParserAbs {
         }
     }
 
+    //testing
     public void printMap(){
-        for(Map.Entry<KeyForHashing,Double[]> entry : linesHash.entrySet()){
-            KeyForHashing key = entry.getKey();
-            Double[] values = entry.getValue();
+        for(KeyForHashing key : linesHash.keySet()){
+            Double[] values = linesHash.get(key);
 
-            System.out.print(key.getTopic() + " " + key.getDocument() + " ");
+            System.out.print("Topic = "+key.getTopic() + ", Document = " + key.getDocument() + ", Scores: ");
             for(int i = 0; i < values.length; i++){
                 System.out.print(values[i] + " ");
             }
             System.out.println("");
+        }
+    }
+
+    //testing
+    public void printMaxMinPerTopic(){
+        System.out.println("Lunghezza della lista: "+maxMinPerTopic.size());
+        int i = 1;
+        for (CustomPair<Double, Double> minMax: maxMinPerTopic) {
+            System.out.println("minScore = "+minMax.getFst()+", maxScore = "+minMax.getSnd()+" "+i);
+            i++;
         }
     }
 }
