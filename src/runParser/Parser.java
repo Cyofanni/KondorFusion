@@ -80,7 +80,6 @@ public class Parser extends ParserAbs {
                 }
                 else{
                     Double[] scores = new Double[runFiles.length];
-                    //used to avoid nulls in scores array
 
                     scores[i] = score;
                     //just to test
@@ -95,8 +94,6 @@ public class Parser extends ParserAbs {
                     linesHash.put(currKey, scores);
                 }
 
-                //linesHash.put(currKey, score);
-                //printMaxMinPerTopic(top);
                 oldTop = top;   //set old topic to current topic
                 run.nextLine();  //mandatory instruction
             }
@@ -111,7 +108,7 @@ public class Parser extends ParserAbs {
 
             //throw away the first dummy item from maxMinPerTopic
             minMaxPerTopic.remove(Integer.MIN_VALUE);
-            //printMaxMinPerTopic(maxMinPerTopic);
+            //printMinMaxPerTopic(maxMinPerTopic);
             //normalization
             normalize(i, minMaxPerTopic);
         }
