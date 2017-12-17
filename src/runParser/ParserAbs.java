@@ -12,7 +12,7 @@ public abstract class ParserAbs {
     abstract public void readAndNormalize(String runDirectory);
     abstract protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp);  //should accept a score, and a (max,min) couple
 
-    abstract protected void normalize(int runIndex, List<CustomPair<Double, Double>> maxMinCouples); /*interface to the rest of the program*/
+    abstract protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples); /*interface to the rest of the program*/
 
     public Map<KeyForHashing,Double[]> getLinesHash() {
         return linesHash;

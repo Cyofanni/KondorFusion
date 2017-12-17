@@ -29,7 +29,7 @@ public class Parser extends ParserAbs {
             Double minScore = null;
             int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
             CustomPair<Double, Double> coupleMaxMin = null;
-            List<CustomPair<Double, Double>> maxMinPerTopic = new ArrayList<>();  //stores max and min scores for each topic
+            Map<Integer, CustomPair<Double, Double>> maxMinPerTopic = new LinkedHashMap<Integer, CustomPair<Double, Double>>();  //stores max and min scores for each topic
 
             while(run.hasNextLine()){
                 int top;   //topic
@@ -47,7 +47,7 @@ public class Parser extends ParserAbs {
                      first item of the list and throw it away later
                      */
                     coupleMaxMin = new CustomPair<Double,Double>(minScore, maxScore);
-                    maxMinPerTopic.add(coupleMaxMin);
+                    maxMinPerTopic.put(oldTop, coupleMaxMin);
                     maxScore = Double.NEGATIVE_INFINITY;   //reset for the next topic
                     minScore = Double.POSITIVE_INFINITY;
                 }
@@ -106,10 +106,10 @@ public class Parser extends ParserAbs {
             ////////////
             //add the last (max,min) to the list, because it has been skipped by the while loop
             coupleMaxMin = new CustomPair<>(minScore, maxScore);
-            maxMinPerTopic.add(coupleMaxMin);
+            maxMinPerTopic.put(oldTop, coupleMaxMin);
 
             //throw away the first dummy item from maxMinPerTopic
-            maxMinPerTopic.remove(0); //here bug fixed.
+            maxMinPerTopic.remove(Integer.MIN_VALUE); //here bug fixed.
             // previous implementation removed only the first couple from the top. thus (null, null) were still present
             printMaxMinPerTopic(maxMinPerTopic);
             //normalization
@@ -125,28 +125,21 @@ public class Parser extends ParserAbs {
     }
 
     @Override
-    protected void normalize(int runIndex, List<CustomPair<Double, Double>> maxMinCouples){
+    protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples){
         //readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
         //foreach to normalize everything, through a call to 'normalizerCaller'
-        int topicCursor = -1;    //index for topics, should run over 'maxMinPerTopic'
-        int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
 
         for(Map.Entry<KeyForHashing,Double[]> entry : linesHash.entrySet()){
             KeyForHashing key = entry.getKey();
             Double[] values = entry.getValue();
             int top = key.getTopic();   //current topic from key
-            /*should still detect when the topic changes*/
-            if (top != oldTop){
-                topicCursor++;
-            }
-            //test print
-            System.out.println("minmax " + topicCursor);
-            CustomPair<Double,Double> maxMin = maxMinCouples.get(topicCursor);
+
+
+            CustomPair<Double,Double> maxMin = maxMinCouples.get(top);
             /*now normalize and replace in 'linesHash' as value for 'key'*/
             values[runIndex] = normalizerCaller(values[runIndex], maxMin);
             linesHash.put(key, values);
 
-            oldTop = top;
         }
     }
 
@@ -164,12 +157,11 @@ public class Parser extends ParserAbs {
     }
 
     //testing
-    public void printMaxMinPerTopic(List<CustomPair<Double, Double>> maxMinCouples){
+    public void printMaxMinPerTopic(Map<Integer, CustomPair<Double, Double>> maxMinCouples){
         System.out.println("Lunghezza della lista: "+maxMinCouples.size());
-        int i = 1;
-        for (CustomPair<Double, Double> minMax: maxMinCouples) {
-            System.out.println("minScore = "+minMax.getFst()+", maxScore = "+minMax.getSnd()+" "+i);
-            i++;
+
+        for (Integer key: maxMinCouples.keySet()) {
+            System.out.println("Topic " + key + " minScore = " + maxMinCouples.get(key).getFst() + " maxScore = " + maxMinCouples.get(key).getSnd());
         }
     }
 }
