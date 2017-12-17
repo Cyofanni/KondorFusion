@@ -29,6 +29,7 @@ public class Parser extends ParserAbs {
             Double minScore = null;
             int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
             CustomPair<Double, Double> coupleMaxMin = null;
+            List<CustomPair<Double, Double>> maxMinPerTopic = new ArrayList<>();  //stores max and min scores for each topic
 
             while(run.hasNextLine()){
                 int top;   //topic
@@ -67,7 +68,7 @@ public class Parser extends ParserAbs {
                     Double[] temp = linesHash.get(currKey);
                     temp[i] = score;
                     //just to test
-                    System.out.print("KEY ALREDY SEEN -> Scores: ");
+                    System.out.print("KEY ALREADY SEEN -> Scores: ");
                     for (Double d: temp) {
                         System.out.print(d+" ");
                     }
@@ -108,11 +109,11 @@ public class Parser extends ParserAbs {
             maxMinPerTopic.add(coupleMaxMin);
 
             //throw away the first dummy item from maxMinPerTopic
-            maxMinPerTopic.remove(50*i); //here bug fixed.
+            maxMinPerTopic.remove(0); //here bug fixed.
             // previous implementation removed only the first couple from the top. thus (null, null) were still present
-            printMaxMinPerTopic();
+            printMaxMinPerTopic(maxMinPerTopic);
             //normalization
-            normalize(i);
+            normalize(i, maxMinPerTopic);
         }
 
     }
@@ -124,7 +125,7 @@ public class Parser extends ParserAbs {
     }
 
     @Override
-    protected void normalize(int runIndex){
+    protected void normalize(int runIndex, List<CustomPair<Double, Double>> maxMinCouples){
         //readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
         //foreach to normalize everything, through a call to 'normalizerCaller'
         int topicCursor = -1;    //index for topics, should run over 'maxMinPerTopic'
@@ -139,7 +140,7 @@ public class Parser extends ParserAbs {
                 topicCursor++;
             }
 
-            CustomPair<Double,Double> maxMin = maxMinPerTopic.get(topicCursor);
+            CustomPair<Double,Double> maxMin = maxMinCouples.get(topicCursor);
             /*now normalize and replace in 'linesHash' as value for 'key'*/
             values[runIndex] = normalizerCaller(values[runIndex], maxMin);
             linesHash.put(key, values);
@@ -162,10 +163,10 @@ public class Parser extends ParserAbs {
     }
 
     //testing
-    public void printMaxMinPerTopic(){
-        System.out.println("Lunghezza della lista: "+maxMinPerTopic.size());
+    public void printMaxMinPerTopic(List<CustomPair<Double, Double>> maxMinCouples){
+        System.out.println("Lunghezza della lista: "+maxMinCouples.size());
         int i = 1;
-        for (CustomPair<Double, Double> minMax: maxMinPerTopic) {
+        for (CustomPair<Double, Double> minMax: maxMinCouples) {
             System.out.println("minScore = "+minMax.getFst()+", maxScore = "+minMax.getSnd()+" "+i);
             i++;
         }
