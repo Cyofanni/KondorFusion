@@ -1,6 +1,5 @@
 package strategies;
 
-import runParser.KeyForHashing;
 import runParser.Parser;
 import runParser.ParserAbs;
 import utils.CustomPair;
@@ -16,13 +15,6 @@ public class MainTestStrategy {
         pa.printMap();
 
         Map<Integer, ArrayList<CustomPair<String, Double>>> r = CombMINStrategy.combMIN(pa.getLinesHash());
-
-        for(Integer topic : r.keySet()){
-            ArrayList<CustomPair<String, Double>> docScores = r.get(topic);
-
-            for (CustomPair<String, Double> c: docScores) {
-                System.out.println("Topic:" + topic + " document:" + c.getFst() + " score:" + c.getSnd());
-            }
-        }
+        CombMINStrategy.printMap(r);
     }
 }

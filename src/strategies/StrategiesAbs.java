@@ -10,5 +10,17 @@ public abstract class StrategiesAbs {
             map.get(key).sort(new CustomComparator());
         }
     }
+
+    public static void printMap(Map<Integer, ArrayList<CustomPair<String, Double>>> m){
+
+        for(Integer topic : m.keySet()){
+            ArrayList<CustomPair<String, Double>> docScores = m.get(topic);
+
+            for (CustomPair<String, Double> c: docScores) {
+                System.out.println("Topic:" + topic + " document:" + c.getFst() + " score:" + c.getSnd());
+            }
+        }
+
+    }
 }
 
