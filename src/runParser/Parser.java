@@ -79,10 +79,7 @@ public class Parser extends ParserAbs {
                 else{
                     Double[] scores = new Double[runFiles.length];
                     //used to avoid nulls in scores array
-                    double[] tempScores = new double[runFiles.length];
-                    for (int j = 0; j < runFiles.length; j++) {
-                        scores[j] = tempScores[j];
-                    }
+
                     scores[i] = score;
                     //just to test
                     System.out.print("NEW KEY -> Scores: ");

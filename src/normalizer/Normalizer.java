@@ -16,7 +16,9 @@ public class Normalizer {
         //System.out.println("score = "+score);
         //System.out.println("min = "+min);
         //System.out.println("max = "+max);
-
+        if(score == null){
+            return null;
+        }
         return (score - min) / (max - min);
     }
 }
