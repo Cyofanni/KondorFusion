@@ -5,7 +5,7 @@ package runParser;
 public class StubMainTestParser {
     public static void main(String[] args){
         ParserAbs pa = new Parser();
-        pa.readAndNormalize("/home/davide/Desktop/test");
-        //pa.printMap();
+        pa.readAndNormalize("/home/davide/Desktop/RUNs");
+        pa.printMap();
     }
 }

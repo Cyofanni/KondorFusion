@@ -29,7 +29,7 @@ public class Parser extends ParserAbs {
             Double minScore = null;
             int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
             CustomPair<Double, Double> coupleMaxMin = null;
-            Map<Integer, CustomPair<Double, Double>> maxMinPerTopic = new LinkedHashMap<Integer, CustomPair<Double, Double>>();  //stores max and min scores for each topic
+            Map<Integer, CustomPair<Double, Double>> minMaxPerTopic = new LinkedHashMap<Integer, CustomPair<Double, Double>>();  //stores max and min scores for each topic
 
             while(run.hasNextLine()){
                 int top;   //topic
@@ -47,7 +47,7 @@ public class Parser extends ParserAbs {
                      first item of the list and throw it away later
                      */
                     coupleMaxMin = new CustomPair<Double,Double>(minScore, maxScore);
-                    maxMinPerTopic.put(oldTop, coupleMaxMin);
+                    minMaxPerTopic.put(oldTop, coupleMaxMin);
                     maxScore = Double.NEGATIVE_INFINITY;   //reset for the next topic
                     minScore = Double.POSITIVE_INFINITY;
                 }
@@ -61,18 +61,20 @@ public class Parser extends ParserAbs {
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
                 //just to test
-                System.out.println("Current topic: "+top+" document: "+doc+" key: "+ currKey.hashCode());
+                //System.out.println("Current topic: "+top+" document: "+doc+" key: "+ currKey.hashCode());
                 ///////////
 
                 if(linesHash.containsKey(currKey)){
                     Double[] temp = linesHash.get(currKey);
                     temp[i] = score;
                     //just to test
+                    /*
                     System.out.print("KEY ALREADY SEEN -> Scores: ");
                     for (Double d: temp) {
                         System.out.print(d+" ");
                     }
                     System.out.println("");
+                    */
                     //////////////
                     linesHash.put(currKey, temp);
                 }
@@ -82,11 +84,13 @@ public class Parser extends ParserAbs {
 
                     scores[i] = score;
                     //just to test
+                    /*
                     System.out.print("NEW KEY -> Scores: ");
                     for (Double d: scores) {
                         System.out.print(d+" ");
                     }
                     System.out.println("");
+                    */
                     ////////////
                     linesHash.put(currKey, scores);
                 }
@@ -98,19 +102,19 @@ public class Parser extends ParserAbs {
             }
 
             //just to test
-            System.out.println("end of run "+i);
-            printMap();
+            //System.out.println("end of run "+i);
+            //printMap();
             ////////////
             //add the last (max,min) to the list, because it has been skipped by the while loop
             coupleMaxMin = new CustomPair<>(minScore, maxScore);
-            maxMinPerTopic.put(oldTop, coupleMaxMin);
+            minMaxPerTopic.put(oldTop, coupleMaxMin);
 
             //throw away the first dummy item from maxMinPerTopic
-            maxMinPerTopic.remove(Integer.MIN_VALUE); //here bug fixed.
+            minMaxPerTopic.remove(Integer.MIN_VALUE); //here bug fixed.
             // previous implementation removed only the first couple from the top. thus (null, null) were still present
-            printMaxMinPerTopic(maxMinPerTopic);
+            //printMaxMinPerTopic(maxMinPerTopic);
             //normalization
-            normalize(i, maxMinPerTopic);
+            normalize(i, minMaxPerTopic);
         }
 
     }
@@ -154,7 +158,7 @@ public class Parser extends ParserAbs {
     }
 
     //testing
-    public void printMaxMinPerTopic(Map<Integer, CustomPair<Double, Double>> maxMinCouples){
+    public void printMinMaxPerTopic(Map<Integer, CustomPair<Double, Double>> maxMinCouples){
         System.out.println("Lunghezza della lista: "+maxMinCouples.size());
 
         for (Integer key: maxMinCouples.keySet()) {
