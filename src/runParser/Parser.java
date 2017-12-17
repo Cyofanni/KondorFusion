@@ -61,7 +61,7 @@ public class Parser extends ParserAbs {
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
                 //just to test
-                System.out.println("Current topic: "+top+" document: "+doc+" key: "+currKey.toString());
+                System.out.println("Current topic: "+top+" document: "+doc+" key: "+ currKey.hashCode());
                 ///////////
 
                 if(linesHash.containsKey(currKey)){
