@@ -8,6 +8,11 @@ class KeyForHashing{
         document = d;
     }
 
+    public KeyForHashing() {
+        topic = Integer.MIN_VALUE;
+        document = null;
+    }
+
     public int getTopic(){
         return topic;
     }
@@ -15,6 +20,10 @@ class KeyForHashing{
     public String getDocument(){
         return document;
     }
+
+    public void setTopic(int t) {topic = t;}
+
+    public void setDocument(String doc) {document = doc;}
 
     public int hashCode(){
         return topic + document.hashCode();

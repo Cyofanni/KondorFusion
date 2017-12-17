@@ -15,6 +15,7 @@ public class Parser extends ParserAbs {
     @Override
     public void readAndNormalize(String runDirectory){
         File[] runFiles = new File(runDirectory).listFiles();
+        KeyForHashing currKey = new KeyForHashing();
 
         for(int i = 0; i < runFiles.length; i++){
             Scanner run = null;
@@ -59,9 +60,10 @@ public class Parser extends ParserAbs {
                     minScore = score;
                 }
 
-                KeyForHashing currKey = new KeyForHashing(top, doc);
+                currKey.setDocument(doc);
+                currKey.setTopic(top);
                 //just to test
-                System.out.println("Current topic: "+top+" document: "+doc+" key: "+currKey.toString());
+                System.out.println("Current topic: "+top+" document: "+doc+" key: "+currKey.hashCode());
                 ///////////
 
                 if(linesHash.containsKey(currKey)){
@@ -155,7 +157,7 @@ public class Parser extends ParserAbs {
         for(KeyForHashing key : linesHash.keySet()){
             Double[] values = linesHash.get(key);
 
-            System.out.print("Topic = "+key.getTopic() + ", Document = " + key.getDocument() + ", Scores: ");
+            System.out.print("Key: "+key.hashCode()+" Topic = "+key.getTopic() + ", Document = " + key.getDocument() + ", Scores: ");
             for(int i = 0; i < values.length; i++){
                 System.out.print(values[i] + " ");
             }
