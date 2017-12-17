@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CombMINStrategy {
+public class CombMINStrategy extends StrategiesAbs {
 
     public static Map<Integer, ArrayList<CustomPair<String, Double>>> combMIN(Map<KeyForHashing,Double[]> linesHash){
 
@@ -45,6 +45,9 @@ public class CombMINStrategy {
             documents.add(docScore);
 
         }
-        return null;
+
+        sort(results);
+
+        return results;
     }
 }
