@@ -1,6 +1,6 @@
 package runParser;
 
-class KeyForHashing{
+public class KeyForHashing{
     private int topic;
     private String document;
     public KeyForHashing(int t, String d){
