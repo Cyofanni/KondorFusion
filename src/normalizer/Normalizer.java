@@ -4,7 +4,7 @@ public class Normalizer {
     Double score;
     Double max;
     Double min;
-    public Normalizer(Double score, Double max, Double min) {
+    public Normalizer(Double score, Double min, Double max) {
         this.score = score;
         this.max = max;
         this.min = min;
