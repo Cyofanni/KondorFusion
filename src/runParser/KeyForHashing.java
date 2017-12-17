@@ -15,4 +15,8 @@ class KeyForHashing{
     public String getDocument(){
         return document;
     }
+
+    public int hashCode(){
+        return topic + document.hashCode();
+    }
 }
