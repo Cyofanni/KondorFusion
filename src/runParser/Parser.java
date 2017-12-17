@@ -7,7 +7,7 @@ import normalizer.Normalizer;
 
 public class Parser extends ParserAbs {
     /**
-     * Reads and parses a file containing retrieval results.
+     * Reads and parses all files containing retrieval results.
      *
      * @param  runDirectory path to directory run file
      * @return LinkedHashMap containing topic and docs id's as key, and scores as values
@@ -110,8 +110,7 @@ public class Parser extends ParserAbs {
             minMaxPerTopic.put(oldTop, coupleMaxMin);
 
             //throw away the first dummy item from maxMinPerTopic
-            minMaxPerTopic.remove(Integer.MIN_VALUE); //here bug fixed.
-            // previous implementation removed only the first couple from the top. thus (null, null) were still present
+            minMaxPerTopic.remove(Integer.MIN_VALUE);
             //printMaxMinPerTopic(maxMinPerTopic);
             //normalization
             normalize(i, minMaxPerTopic);
@@ -127,7 +126,6 @@ public class Parser extends ParserAbs {
 
     @Override
     protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples){
-        //readRun(runFile);  //this call sets 'linesHash' and 'maxMinPerTopic' to the non-normalized values
         //foreach to normalize everything, through a call to 'normalizerCaller'
 
         for(Map.Entry<KeyForHashing,Double[]> entry : linesHash.entrySet()){
