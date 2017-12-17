@@ -9,9 +9,9 @@ public class CustomComparator implements Comparator<CustomPair<String, Double>> 
         Double score2 = obj2.getSnd();
 
         if(score1 < score2)
-            return -1;
-        if(score1 > score2)
             return 1;
+        if(score1 > score2)
+            return -1;
         return 0;
     }
 

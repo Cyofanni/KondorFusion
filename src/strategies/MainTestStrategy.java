@@ -11,7 +11,7 @@ public class MainTestStrategy {
 
     public static void main(String[] args){
         ParserAbs pa = new Parser();
-        pa.readAndNormalize("/home/marco/Scrivania/test");
+        pa.readAndNormalize("/home/davide/Desktop/test");
         pa.printMap();
 
         Map<Integer, ArrayList<CustomPair<String, Double>>> r = CombMINStrategy.combMIN(pa.getLinesHash());
