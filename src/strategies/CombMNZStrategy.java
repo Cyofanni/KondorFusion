@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CombMNZStrategy {
+public class CombMNZStrategy extends StrategiesAbs{
 
     public static Map<Integer, ArrayList<CustomPair<String, Double>>> combMNZ(Map<KeyForHashing,Double[]> linesHash) {
 
@@ -45,6 +45,8 @@ public class CombMNZStrategy {
             documents.add(docScore);
 
         }
-        return null;
+        sort(results);
+
+        return results;
     }
 }

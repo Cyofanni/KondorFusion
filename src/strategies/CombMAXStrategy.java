@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CombMAXStrategy {
+public class CombMAXStrategy extends StrategiesAbs {
 
     public static Map<Integer, ArrayList<CustomPair<String, Double>>> combMAX(Map<KeyForHashing,Double[]> linesHash){
 
@@ -45,6 +45,9 @@ public class CombMAXStrategy {
             documents.add(docScore);
 
         }
-        return null;
+
+        sort(results);
+
+        return results;
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CombSUMStrategy {
+public class CombSUMStrategy extends StrategiesAbs{
 
     public static Map<Integer, ArrayList<CustomPair<String, Double>>> combSUM(Map<KeyForHashing,Double[]> linesHash){
 
@@ -42,6 +42,8 @@ public class CombSUMStrategy {
             documents.add(docScore);
 
         }
-        return null;
+        sort(results);
+
+        return results;
     }
 }

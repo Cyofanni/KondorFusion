@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CombMEDStrategy {
+public class CombMEDStrategy extends StrategiesAbs{
 
     public static Map<Integer, ArrayList<CustomPair<String, Double>>> combMED(Map<KeyForHashing,Double[]> linesHash) {
 
@@ -43,6 +43,8 @@ public class CombMEDStrategy {
             documents.add(docScore);
 
         }
-        return null;
+        sort(results);
+
+        return results;
     }
 }
