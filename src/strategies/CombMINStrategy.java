@@ -20,7 +20,7 @@ public class CombMINStrategy extends StrategiesAbs {
             int top = key.getTopic();   //current topic from key
             String doc = key.getDocument(); //current document
 
-            double min = Double.MAX_VALUE;
+            double min = Double.POSITIVE_INFINITY;
 
             for(int i = 0; i < values.length; i++){
                 if(values[i] == null){
