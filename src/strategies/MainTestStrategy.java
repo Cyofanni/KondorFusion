@@ -11,10 +11,32 @@ public class MainTestStrategy {
 
     public static void main(String[] args){
         ParserAbs pa = new Parser();
-        pa.readAndNormalize("/home/davide/Desktop/test");
+        pa.readAndNormalize("/home/marco/Scrivania/test");
         pa.printMap();
 
-        Map<Integer, ArrayList<CustomPair<String, Double>>> r = CombMINStrategy.combMIN(pa.getLinesHash());
-        CombMINStrategy.printMap(r);
+        Map<Integer, ArrayList<CustomPair<String, Double>>> minMap = CombMINStrategy.combMIN(pa.getLinesHash());
+        System.out.println("CombMIN results --------------------");
+        CombMINStrategy.printMap(minMap);
+
+        Map<Integer, ArrayList<CustomPair<String, Double>>> maxMap = CombMAXStrategy.combMAX(pa.getLinesHash());
+        System.out.println("CombMAX results --------------------");
+        CombMINStrategy.printMap(maxMap);
+
+        Map<Integer, ArrayList<CustomPair<String, Double>>> sumMap = CombSUMStrategy.combSUM(pa.getLinesHash());
+        System.out.println("CombSUM results --------------------");
+        CombMINStrategy.printMap(sumMap);
+
+        Map<Integer, ArrayList<CustomPair<String, Double>>> medMap = CombMEDStrategy.combMED(pa.getLinesHash());
+        System.out.println("CombMED results --------------------");
+        CombMINStrategy.printMap(medMap);
+
+        Map<Integer, ArrayList<CustomPair<String, Double>>> anzMap = CombANZStrategy.combANZ(pa.getLinesHash());
+        System.out.println("CombANZ results --------------------");
+        CombMINStrategy.printMap(anzMap);
+
+        Map<Integer, ArrayList<CustomPair<String, Double>>> mnzMap = CombMNZStrategy.combMNZ(pa.getLinesHash());
+        System.out.println("CombMNZ results --------------------");
+        CombMINStrategy.printMap(mnzMap);
+
     }
 }
