@@ -2,6 +2,7 @@ package strategies;
 
 import runParser.Parser;
 import runParser.ParserAbs;
+import strategies.basic.*;
 import utils.CustomPair;
 
 import java.util.ArrayList;

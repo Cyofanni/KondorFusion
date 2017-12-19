@@ -1,16 +1,16 @@
-package strategies;
-
+package strategies.basic;
 
 import runParser.KeyForHashing;
+import strategies.StrategiesAbs;
 import utils.CustomPair;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CombMINStrategy extends StrategiesAbs {
+public class CombSUMStrategy extends StrategiesAbs {
 
-    public static Map<Integer, ArrayList<CustomPair<String, Double>>> combMIN(Map<KeyForHashing,Double[]> linesHash){
+    public static Map<Integer, ArrayList<CustomPair<String, Double>>> combSUM(Map<KeyForHashing,Double[]> linesHash){
 
         Map<Integer, ArrayList<CustomPair<String, Double>>> results = new LinkedHashMap<>();
 
@@ -20,18 +20,16 @@ public class CombMINStrategy extends StrategiesAbs {
             int top = key.getTopic();   //current topic from key
             String doc = key.getDocument(); //current document
 
-            double min = Double.POSITIVE_INFINITY;
+            double sum = 0;
 
             for(int i = 0; i < values.length; i++){
                 if(values[i] == null){
                     continue;
                 }
-                if(values[i] < min){
-                    min = values[i];
-                }
+                sum += values[i];
             }
 
-            CustomPair<String, Double> docScore = new CustomPair<>(doc, min);
+            CustomPair<String, Double> docScore = new CustomPair<>(doc, sum); //couple document and final score
             ArrayList<CustomPair<String, Double>> documents;
 
             if(!results.containsKey(top)){
@@ -45,7 +43,6 @@ public class CombMINStrategy extends StrategiesAbs {
             documents.add(docScore);
 
         }
-
         sort(results);
 
         return results;

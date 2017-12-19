@@ -1,13 +1,14 @@
-package strategies;
+package strategies.basic;
 
 import runParser.KeyForHashing;
+import strategies.StrategiesAbs;
 import utils.CustomPair;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CombMEDStrategy extends StrategiesAbs{
+public class CombMEDStrategy extends StrategiesAbs {
 
     public static Map<Integer, ArrayList<CustomPair<String, Double>>> combMED(Map<KeyForHashing,Double[]> linesHash) {
 
