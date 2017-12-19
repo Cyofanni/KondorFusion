@@ -7,20 +7,21 @@ import java.io.*;
 
 
 public abstract class ParserAbs {
-    protected Map<KeyForHashing,Double[]> linesHash = new LinkedHashMap<KeyForHashing,Double[]>(); //store the lines read from run file
+    protected Map<KeyForHashing,Double[]> linesHashSorted = new LinkedHashMap<KeyForHashing,Double[]>(); //store the lines read from run file
 
     abstract public void readAndNormalize(String runDirectory);
     abstract protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp);  //should accept a score, and a (max,min) couple
 
-    abstract protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples); /*interface to the rest of the program*/
+    abstract protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples,
+                                      Map<KeyForHashing,Double[]> linesHash); /*interface to the rest of the program*/
 
     public Map<KeyForHashing,Double[]> getLinesHash() {
-        return linesHash;
+        return linesHashSorted;
     }
 
     abstract public void printMap();
 
-    protected static int countTopics(String runFile){
+    protected static ArrayList<Integer> arrayTopics(String runFile){
         File f = new File(runFile);
         Scanner sc = null;
         try {
@@ -29,17 +30,17 @@ public abstract class ParserAbs {
             e.printStackTrace();
         }
 
-        int count = 0;
+       ArrayList<Integer> topics = new ArrayList<>();
         int oldTopic = Integer.MIN_VALUE;
 
         while(sc.hasNextLine()){
             int topic = sc.nextInt();
             if(oldTopic != topic){
-                count++;
+                topics.add(topic);
                 oldTopic = topic;
             }
             sc.nextLine();
         }
-        return count;
+        return topics;
     }
 }

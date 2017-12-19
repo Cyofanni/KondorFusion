@@ -6,7 +6,7 @@ import normalizer.Normalizer;
 
 
 public class Parser extends ParserAbs {
-    /**
+     /**
      * Reads and parses all files containing retrieval results.
      *
      * @param  runDirectory path to directory run file
@@ -14,7 +14,9 @@ public class Parser extends ParserAbs {
      */
     @Override
     public void readAndNormalize(String runDirectory){
+        Map<KeyForHashing,Double[]> linesHash = new LinkedHashMap<KeyForHashing,Double[]>();
         File[] runFiles = new File(runDirectory).listFiles();
+
 
         for(int i = 0; i < runFiles.length; i++){
             Scanner run = null;
@@ -60,37 +62,17 @@ public class Parser extends ParserAbs {
                 }
 
                 KeyForHashing currKey = new KeyForHashing(top, doc);
-                //just to test
-                //System.out.println("Current topic: "+top+" document: "+doc+" key: "+ currKey.hashCode());
-                ///////////
+
 
                 if(linesHash.containsKey(currKey)){
                     Double[] temp = linesHash.get(currKey);
                     temp[i] = score;
-                    //just to test
-                    /*
-                    System.out.print("KEY ALREADY SEEN -> Scores: ");
-                    for (Double d: temp) {
-                        System.out.print(d+" ");
-                    }
-                    System.out.println("");
-                    */
-                    //////////////
                     linesHash.put(currKey, temp);
                 }
                 else{
                     Double[] scores = new Double[runFiles.length];
 
                     scores[i] = score;
-                    //just to test
-                    /*
-                    System.out.print("NEW KEY -> Scores: ");
-                    for (Double d: scores) {
-                        System.out.print(d+" ");
-                    }
-                    System.out.println("");
-                    */
-                    ////////////
                     linesHash.put(currKey, scores);
                 }
 
@@ -98,10 +80,7 @@ public class Parser extends ParserAbs {
                 run.nextLine();  //mandatory instruction
             }
 
-            //just to test
-            //System.out.println("end of run "+i);
-            //printMap();
-            ////////////
+
             //add the last (max,min) to the list, because it has been skipped by the while loop
             coupleMaxMin = new CustomPair<>(minScore, maxScore);
             minMaxPerTopic.put(oldTop, coupleMaxMin);
@@ -110,9 +89,9 @@ public class Parser extends ParserAbs {
             minMaxPerTopic.remove(Integer.MIN_VALUE);
             //printMinMaxPerTopic(maxMinPerTopic);
             //normalization
-            normalize(i, minMaxPerTopic);
+            normalize(i, minMaxPerTopic, linesHash);
         }
-
+        sortPerTopics(linesHash, arrayTopics(runFiles[0].getAbsolutePath()));
     }
 
     @Override
@@ -122,7 +101,8 @@ public class Parser extends ParserAbs {
     }
 
     @Override
-    protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples){
+    protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples,
+                             Map<KeyForHashing,Double[]> linesHash) {
         //foreach to normalize everything, through a call to 'normalizerCaller'
 
         for(Map.Entry<KeyForHashing,Double[]> entry : linesHash.entrySet()){
@@ -141,8 +121,8 @@ public class Parser extends ParserAbs {
 
     //testing
     public void printMap(){
-        for(KeyForHashing key : linesHash.keySet()){
-            Double[] values = linesHash.get(key);
+        for(KeyForHashing key : linesHashSorted.keySet()){
+            Double[] values = linesHashSorted.get(key);
 
             System.out.print("Topic = "+key.getTopic() + ", Document = " + key.getDocument() + ", Scores: ");
             for(int i = 0; i < values.length; i++){
@@ -158,6 +138,27 @@ public class Parser extends ParserAbs {
 
         for (Integer key: maxMinCouples.keySet()) {
             System.out.println("Topic " + key + " minScore = " + maxMinCouples.get(key).getFst() + " maxScore = " + maxMinCouples.get(key).getSnd());
+        }
+    }
+
+    //sort linkedHashMap by increasing topics
+    //read topics codes yielded by arrayTopics
+    private void sortPerTopics(Map<KeyForHashing,Double[]> linesHash, ArrayList<Integer> topics){
+        Set<Map.Entry<KeyForHashing, Double[]>> entrySet = linesHash.entrySet();
+        ArrayList<Map.Entry<KeyForHashing, Double[]>> listOfEntries = new ArrayList<>(entrySet);
+
+
+        for(int i = 0; i < topics.size(); i++){
+
+            for(int k = 0; k < listOfEntries.size(); k++){
+                Map.Entry<KeyForHashing, Double[]> entry = listOfEntries.get(k);
+                KeyForHashing key = entry.getKey();
+
+                if(key.getTopic() == topics.get(i)){
+                    linesHashSorted.put(key, entry.getValue());
+                    listOfEntries.remove(k);
+                }
+            }
         }
     }
 }
