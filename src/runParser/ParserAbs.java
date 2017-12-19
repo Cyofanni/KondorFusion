@@ -19,4 +19,27 @@ public abstract class ParserAbs {
     }
 
     abstract public void printMap();
+
+    protected static int countTopics(String runFile){
+        File f = new File(runFile);
+        Scanner sc = null;
+        try {
+            sc = new Scanner(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        int count = 0;
+        int oldTopic = Integer.MIN_VALUE;
+
+        while(sc.hasNextLine()){
+            int topic = sc.nextInt();
+            if(oldTopic != topic){
+                count++;
+                oldTopic = topic;
+            }
+            sc.nextLine();
+        }
+        return count;
+    }
 }
