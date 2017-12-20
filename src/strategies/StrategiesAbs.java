@@ -2,6 +2,7 @@ package strategies;
 
 import utils.CustomPair;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class StrategiesAbs {
@@ -10,6 +11,9 @@ public abstract class StrategiesAbs {
             map.get(key).sort(new CustomComparator());
         }
     }
+
+    protected Map<Integer, ArrayList<CustomPair<String, Double>>> results = new LinkedHashMap<>();
+
 
     public static void printMap(Map<Integer, ArrayList<CustomPair<String, Double>>> m){
 

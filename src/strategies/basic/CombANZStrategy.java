@@ -10,13 +10,15 @@ import java.util.Map;
 
 public class CombANZStrategy extends StrategiesAbs {
 
-    public static Map<Integer, ArrayList<CustomPair<String, Double>>> combANZ(Map<KeyForHashing,Double[]> linesHash) {
-
-        Map<Integer, ArrayList<CustomPair<String, Double>>> results = new LinkedHashMap<>();
-
-        for (Map.Entry<KeyForHashing, Double[]> entry : linesHash.entrySet()) {
+    public void combANZ(Map<KeyForHashing,CustomPair<Integer,Double>[]> linesHash) {
+        for (Map.Entry<KeyForHashing, CustomPair<Integer,Double>[]> entry : linesHash.entrySet()) {
             KeyForHashing key = entry.getKey();
-            Double[] values = entry.getValue();
+            CustomPair<Integer,Double>[] values = entry.getValue();
+            Double[] scores = new Double[values.length];
+            for(int i = 0; i < values.length; i++){
+                CustomPair<Integer,Double> cp = values[i];
+                scores[i] = cp.getSnd();
+            }
             int top = key.getTopic();   //current topic from key
             String doc = key.getDocument(); //current document
 
@@ -24,11 +26,11 @@ public class CombANZStrategy extends StrategiesAbs {
             int numberOfZeroSimilarities = 0;
 
             for (int i = 0; i < values.length; i++) {
-                if(values[i] == null){
+                if(scores[i] == null){
                     numberOfZeroSimilarities++;
                     continue;
                 }
-                sum += values[i];
+                sum += scores[i];
             }
 
             double score = sum / (values.length - numberOfZeroSimilarities); //mean of values
@@ -47,7 +49,5 @@ public class CombANZStrategy extends StrategiesAbs {
 
         }
         sort(results);
-
-        return results;
     }
 }
