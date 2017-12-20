@@ -19,7 +19,7 @@ public class Parser extends ParserAbs {
 
         File[] runFiles = new File(runDirectory).listFiles();
 
-        for(int runIndex = 0; runIndex < runFiles.length; runIndex++){
+        for(int runIndex = 0; runIndex < runFiles.length; runIndex++){ //runs
             int topicIndex = -1;
             Scanner run = null;
             try{
@@ -29,14 +29,14 @@ public class Parser extends ParserAbs {
                 exc.printStackTrace();
             }
 
-            Double maxScore = null;
-            Double minScore = null;
+            Double maxScore = Double.NEGATIVE_INFINITY;
+            Double minScore = Double.POSITIVE_INFINITY;
             int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
             CustomPair<Double, Double> coupleMaxMin = null;
 
             Map<String, Value[]> documentMap = null;
 
-            while(run.hasNextLine()){
+            while(run.hasNextLine()){ //row
                 int top;   //topic
                 String doc;  //document id
                 Double score;  //score
@@ -49,6 +49,12 @@ public class Parser extends ParserAbs {
 
 
                 if(oldTop != top){
+                    if(oldTop != Integer.MIN_VALUE){
+                        //normalize
+                        normalize(documentMap, runIndex, minScore, maxScore);
+                        maxScore = Double.NEGATIVE_INFINITY;
+                        minScore = Double.POSITIVE_INFINITY;
+                    }
                     topicIndex++;
                     oldTop = top;
                     if(runIndex == 0){ //scan only the first run and insert the topics
@@ -74,8 +80,16 @@ public class Parser extends ParserAbs {
                 }
                 v[runIndex] = new Value(rank, score);
 
-
+                if (score > maxScore){
+                    maxScore = score;
+                }
+                else if (score < minScore){
+                    minScore = score;
+                }
             }
+
+            //normalize
+            normalize(documentMap, runIndex, minScore, maxScore);
         }
 
 
@@ -83,15 +97,19 @@ public class Parser extends ParserAbs {
     }
 
     //@Override
-    protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp){
-        Normalizer norm = new Normalizer(score, cp.getFst(), cp.getSnd());
+    protected Double normalizerCaller(Double score, Double minScore, Double maxScore){
+        Normalizer norm = new Normalizer(score, minScore, maxScore);
         return norm.normalize();
     }
 
     //@Override
-    protected void normalize() {
+    protected void normalize(Map<String, Value[]> documentMap, int runIndex, Double minScore, Double maxScore) {
         //foreach to normalize everything, through a call to 'normalizerCaller'
-
+        for (String doc: documentMap.keySet()) {
+            Value[] v = documentMap.get(doc);
+            Double normalizeScore = normalizerCaller(v[runIndex].getScore(), minScore, maxScore);
+            v[runIndex].setScore(normalizeScore);
+        }
     }
 
     //testing
