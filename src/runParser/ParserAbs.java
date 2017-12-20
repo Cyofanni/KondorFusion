@@ -13,5 +13,7 @@ public abstract class ParserAbs {
 
     abstract public void readAndNormalize(String runDirectory);
 
-
+    public List<Topic> getRuns(){
+        return runs;
+    }
 }

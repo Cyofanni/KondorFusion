@@ -15,6 +15,10 @@ public class MainTestStrategy {
         pa.readAndNormalize("/home/marco/Scrivania/test");
         pa.printRuns();
 
+        CombMINStrategy cmin = new CombMINStrategy();
+        cmin.combMIN(pa.getRuns());
+        cmin.printResults();
+
         //CombANZStrategy canz = new CombANZStrategy();
 
       /*  Map<Integer, ArrayList<CustomPair<String, Double>>> minMap = CombMINStrategy.combMIN(pa.getLinesHash());

@@ -43,7 +43,7 @@ public class CombSUMStrategy extends StrategiesAbs {
             documents.add(docScore);
 
         }
-        sort(results);
+        //sort(results);
 
         return results;
     }

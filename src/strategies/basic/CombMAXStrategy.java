@@ -47,7 +47,7 @@ public class CombMAXStrategy extends StrategiesAbs {
 
         }
 
-        sort(results);
+        //sort(results);
 
         return results;
     }
