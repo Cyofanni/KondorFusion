@@ -17,6 +17,7 @@ public abstract class StrategiesAbs {
         int rank = 0;
         int oldTop = Integer.MIN_VALUE;
 
+        //TODO da sistemare rank!!!!!!!!!!!!!!!!!
         for(Document doc : documents){
             doc.setRank(rank);
             if(oldTop != doc.getTopic() && oldTop != Integer.MIN_VALUE){
