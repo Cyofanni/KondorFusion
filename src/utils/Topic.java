@@ -32,7 +32,7 @@ public class Topic {
         StringBuilder s = new StringBuilder();
 
         for(String docId : map.keySet()){
-            s.append("Topic " + topic + "docID: " + docId);
+            s.append("Topic " + topic + " docID: " + docId);
             for(Value v : map.get(docId)){
                 s.append(" " + v.toString());
             }
