@@ -11,11 +11,11 @@ import java.util.Map;
 public class MainTestStrategy {
 
     public static void main(String[] args){
-        ParserAbs pa = new Parser();
-        pa.readAndNormalize("/home/marco/Scrivania/");
-        pa.printMap();
+        Parser pa = new Parser();
+        pa.readAndNormalize("/home/marco/Scrivania/test");
+        pa.printRuns();
 
-        CombANZStrategy canz = new CombANZStrategy();
+        //CombANZStrategy canz = new CombANZStrategy();
 
       /*  Map<Integer, ArrayList<CustomPair<String, Double>>> minMap = CombMINStrategy.combMIN(pa.getLinesHash());
         System.out.println("CombMIN results --------------------");
@@ -33,7 +33,7 @@ public class MainTestStrategy {
         System.out.println("CombMED results --------------------");
         CombMINStrategy.printMap(medMap);*/
 
-        canz.combANZ(pa.getLinesHash());
+        //canz.combANZ(pa.getLinesHash());
        // System.out.println("CombANZ results --------------------");
         //CombMINStrategy.printMap(anzMap);
 

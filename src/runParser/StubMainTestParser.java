@@ -4,8 +4,8 @@ package runParser;
 
 public class StubMainTestParser {
     public static void main(String[] args){
-        ParserAbs pa = new Parser();
-        pa.readAndNormalize("/home/marco/Scrivania/run");
-        pa.printMap();
+        Parser pa = new Parser();
+        pa.readAndNormalize("/home/marco/Scrivania/test");
+        pa.printRuns();
     }
 }
