@@ -21,4 +21,5 @@ public class Normalizer {
         }
         return (score - min) / (max - min);
     }
+    public Double normalizeSimple() { return score/max; }
 }
