@@ -13,9 +13,6 @@ public class Normalizer {
     /**implements Lee95's normalization
      * */
     public Double normalize(){
-        //System.out.println("score = "+score);
-        //System.out.println("min = "+min);
-        //System.out.println("max = "+max);
         if(score == null){
             return null;
         }
