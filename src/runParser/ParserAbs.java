@@ -7,15 +7,15 @@ import java.io.*;
 
 
 public abstract class ParserAbs {
-    protected Map<KeyForHashing,Double[]> linesHashSorted = new LinkedHashMap<KeyForHashing,Double[]>(); //store the lines read from run file
+    protected Map<KeyForHashing,CustomPair<Integer, Double>[]> linesHashSorted = new LinkedHashMap<>(); //store the lines read from run file
 
     abstract public void readAndNormalize(String runDirectory);
     abstract protected Double normalizerCaller(Double score, CustomPair<Double,Double> cp);  //should accept a score, and a (max,min) couple
 
     abstract protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples,
-                                      Map<KeyForHashing,Double[]> linesHash); /*interface to the rest of the program*/
+                                      Map<KeyForHashing,CustomPair<Integer, Double>[]> linesHash); /*interface to the rest of the program*/
 
-    public Map<KeyForHashing,Double[]> getLinesHash() {
+    public Map<KeyForHashing,CustomPair<Integer, Double>[]> getLinesHash() {
         return linesHashSorted;
     }
 

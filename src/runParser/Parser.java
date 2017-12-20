@@ -14,7 +14,7 @@ public class Parser extends ParserAbs {
      */
     @Override
     public void readAndNormalize(String runDirectory){
-        Map<KeyForHashing,Double[]> linesHash = new LinkedHashMap<KeyForHashing,Double[]>();
+        Map<KeyForHashing,CustomPair<Integer, Double>[]> linesHash = new LinkedHashMap<>();
         File[] runFiles = new File(runDirectory).listFiles();
 
 
@@ -40,7 +40,7 @@ public class Parser extends ParserAbs {
                 top = run.nextInt();
                 run.next();
                 doc = run.next();
-                run.next();
+                int rank = run.nextInt();
                 score = run.nextDouble();
 
                 if (top != oldTop){
@@ -65,15 +65,17 @@ public class Parser extends ParserAbs {
 
 
                 if(linesHash.containsKey(currKey)){
-                    Double[] temp = linesHash.get(currKey);
-                    temp[i] = score;
-                    linesHash.put(currKey, temp);
+                    CustomPair<Integer, Double>[] rankScores = linesHash.get(currKey);
+                    CustomPair<Integer, Double> couple = new CustomPair<>(rank, score);
+                    rankScores[i] = couple;
+                    //linesHash.put(currKey, temp);
                 }
                 else{
-                    Double[] scores = new Double[runFiles.length];
+                    CustomPair<Integer, Double>[] rankScores = new CustomPair[runFiles.length];
+                    CustomPair<Integer, Double> couple = new CustomPair<>(rank, score);
 
-                    scores[i] = score;
-                    linesHash.put(currKey, scores);
+                    rankScores[i] = couple;
+                    linesHash.put(currKey, rankScores);
                 }
 
                 oldTop = top;   //set old topic to current topic
@@ -102,18 +104,18 @@ public class Parser extends ParserAbs {
 
     @Override
     protected void normalize(int runIndex, Map<Integer, CustomPair<Double, Double>> maxMinCouples,
-                             Map<KeyForHashing,Double[]> linesHash) {
+                             Map<KeyForHashing,CustomPair<Integer, Double>[]> linesHash) {
         //foreach to normalize everything, through a call to 'normalizerCaller'
 
-        for(Map.Entry<KeyForHashing,Double[]> entry : linesHash.entrySet()){
+        for(Map.Entry<KeyForHashing,CustomPair<Integer, Double>[]> entry : linesHash.entrySet()){
             KeyForHashing key = entry.getKey();
-            Double[] values = entry.getValue();
+            CustomPair<Integer, Double>[] values = entry.getValue();
             int top = key.getTopic();   //current topic from key
 
 
             CustomPair<Double,Double> maxMin = maxMinCouples.get(top);
             /*now normalize and replace in 'linesHash' as value for 'key'*/
-            values[runIndex] = normalizerCaller(values[runIndex], maxMin);
+            values[runIndex].setSnd(normalizerCaller(values[runIndex].getSnd(), maxMin));
             linesHash.put(key, values);
 
         }
@@ -122,11 +124,11 @@ public class Parser extends ParserAbs {
     //testing
     public void printMap(){
         for(KeyForHashing key : linesHashSorted.keySet()){
-            Double[] values = linesHashSorted.get(key);
+            CustomPair<Integer, Double>[] values = linesHashSorted.get(key);
 
-            System.out.print("Topic = "+key.getTopic() + ", Document = " + key.getDocument() + ", Scores: ");
+            System.out.print("Topic = "+ key.getTopic() + ", Document = " + key.getDocument() + ", Rank: ");
             for(int i = 0; i < values.length; i++){
-                System.out.print(values[i] + " ");
+                System.out.print(values[i].getFst() + " Score: " + values[i].getSnd());
             }
             System.out.println("");
         }
@@ -143,15 +145,15 @@ public class Parser extends ParserAbs {
 
     //sort linkedHashMap by increasing topics
     //read topics codes yielded by arrayTopics
-    private void sortPerTopics(Map<KeyForHashing,Double[]> linesHash, ArrayList<Integer> topics){
-        Set<Map.Entry<KeyForHashing, Double[]>> entrySet = linesHash.entrySet();
-        ArrayList<Map.Entry<KeyForHashing, Double[]>> listOfEntries = new ArrayList<>(entrySet);
+    private void sortPerTopics(Map<KeyForHashing,CustomPair<Integer, Double>[]> linesHash, ArrayList<Integer> topics){
+        Set<Map.Entry<KeyForHashing, CustomPair<Integer, Double>[]>> entrySet = linesHash.entrySet();
+        ArrayList<Map.Entry<KeyForHashing, CustomPair<Integer, Double>[]>> listOfEntries = new ArrayList<>(entrySet);
 
 
         for(int i = 0; i < topics.size(); i++){
 
             for(int k = 0; k < listOfEntries.size(); k++){
-                Map.Entry<KeyForHashing, Double[]> entry = listOfEntries.get(k);
+                Map.Entry<KeyForHashing, CustomPair<Integer, Double>[]> entry = listOfEntries.get(k);
                 KeyForHashing key = entry.getKey();
 
                 if(key.getTopic() == topics.get(i)){

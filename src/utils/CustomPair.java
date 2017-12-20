@@ -15,4 +15,14 @@ public class CustomPair<S, T>{
     public T getSnd() {
         return snd;
     }
+
+    public S setFst(S fst){
+        this.fst = fst;
+        return fst;
+    }
+
+    public T setSnd(T snd){
+        this.snd = snd;
+        return snd;
+    }
 }
