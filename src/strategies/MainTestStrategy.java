@@ -12,7 +12,7 @@ public class MainTestStrategy {
 
     public static void main(String[] args){
         ParserAbs pa = new Parser();
-        pa.readAndNormalize("/home/marco/Scrivania/test");
+        pa.readAndNormalize("/home/marco/Scrivania/");
         pa.printMap();
 
         CombANZStrategy canz = new CombANZStrategy();
