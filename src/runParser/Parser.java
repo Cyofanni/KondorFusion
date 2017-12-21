@@ -1,8 +1,9 @@
 package runParser;
+
 import java.util.*;
 import java.io.*;
-import utils.CustomPair;
 import normalizer.Normalizer;
+import utils.CustomPair;
 import utils.Topic;
 import utils.Value;
 
@@ -12,14 +13,13 @@ public class Parser extends ParserAbs {
      * Reads and parses all files containing retrieval results.
      *
      * @param  runDirectory path to directory run file
-     * @return LinkedHashMap containing topic and docs id's as key, and scores as values
      */
     @Override
     public void readAndNormalize(String runDirectory){
 
         File[] runFiles = new File(runDirectory).listFiles();
 
-        for(int runIndex = 0; runIndex < runFiles.length; runIndex++){ //runs
+        for(int runIndex = 0; runIndex < runFiles.length; runIndex++){ //cycle on runs
             int topicIndex = -1;
             Scanner run = null;
             try{
@@ -29,35 +29,38 @@ public class Parser extends ParserAbs {
                 exc.printStackTrace();
             }
 
-            Double maxScore = Double.NEGATIVE_INFINITY;
-            Double minScore = Double.POSITIVE_INFINITY;
-            int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
-            CustomPair<Double, Double> coupleMaxMin = null;
+            Double maxScore = Double.NEGATIVE_INFINITY; //max score per topic per run, used to compute normalization
+            Double minScore = Double.POSITIVE_INFINITY; //min score per topic per run, used to compute normalization
+            int oldTop = Integer.MIN_VALUE; //old topic, used to check if it changes in the next iteration
 
             Map<String, Value[]> documentMap = null;
 
-            while(run.hasNextLine()){ //row
+            while(run.hasNextLine()){ //cycle on each row of run file
+                //run format: topic, Q0, documentID, documentRank, documentScore, runName
                 int top;   //topic
-                String doc;  //document id
-                Double score;  //score
+                String doc;  //documentID
+                int rank;  //documentRank
+                Double score;  //documentScore
+
+                //collect information from run file
                 top = run.nextInt();
                 run.next();
                 doc = run.next();
-                int rank = run.nextInt();
+                rank = run.nextInt();
                 score = run.nextDouble();
-                run.nextLine(); //mandatory instruction
+                run.nextLine(); //mandatory instruction: scanner must start from next line
 
-
-                if(oldTop != top){
-                    if(oldTop != Integer.MIN_VALUE){
+                if(oldTop != top){ //normalization is performed on the previous topic when a new one occurs
+                    if(oldTop != Integer.MIN_VALUE){ //first topic of the run must wait
                         //normalize
                         normalize(documentMap, runIndex, minScore, maxScore);
+                        //reset min score and max score
                         maxScore = Double.NEGATIVE_INFINITY;
                         minScore = Double.POSITIVE_INFINITY;
                     }
-                    topicIndex++;
+                    topicIndex++; //topics are disposed in increasing order
                     oldTop = top;
-                    if(runIndex == 0){ //scan only the first run and insert the topics
+                    if(runIndex == 0){ //insert elements in results only during the first run
                         documentMap = new LinkedHashMap<>();
                         Topic t = new Topic(top, documentMap);
                         runs.add(t);
@@ -88,12 +91,9 @@ public class Parser extends ParserAbs {
                 }
             }
 
-            //normalize
+            //normalize the last topic of the run
             normalize(documentMap, runIndex, minScore, maxScore);
         }
-
-
-
     }
 
     //@Override
@@ -118,6 +118,4 @@ public class Parser extends ParserAbs {
             System.out.println(runs.get(i));
         }
     }
-
-
 }
