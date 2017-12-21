@@ -1,7 +1,7 @@
 package runParser;
 import java.util.*;
 import java.io.*;
-import utils.CustomPair;
+
 import normalizer.Normalizer;
 import utils.Topic;
 import utils.Value;

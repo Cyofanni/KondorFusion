@@ -1,15 +1,8 @@
 package strategies.basic;
 
 
-import runParser.KeyForHashing;
 import strategies.StrategiesAbs;
-import utils.CustomPair;
-import utils.Document;
-import utils.Topic;
-import utils.Value;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import utils.*;
 import java.util.List;
 import java.util.Map;
 

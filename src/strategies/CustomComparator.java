@@ -1,7 +1,7 @@
 package strategies;
 
 import java.util.Comparator;
-import utils.CustomPair;
+
 import utils.Document;
 
 public class CustomComparator implements Comparator<Document> {
