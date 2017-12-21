@@ -3,7 +3,6 @@ package runParser;
 import java.util.*;
 import java.io.*;
 import normalizer.Normalizer;
-import utils.CustomPair;
 import utils.Topic;
 import utils.Value;
 
