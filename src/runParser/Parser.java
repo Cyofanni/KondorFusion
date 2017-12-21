@@ -32,7 +32,6 @@ public class Parser extends ParserAbs {
             Double maxScore = Double.NEGATIVE_INFINITY;
             Double minScore = Double.POSITIVE_INFINITY;
             int oldTop = Integer.MIN_VALUE;   //old topic, used to check if it changes in the next iteration
-            CustomPair<Double, Double> coupleMaxMin = null;
 
             Map<String, Value[]> documentMap = null;
 
