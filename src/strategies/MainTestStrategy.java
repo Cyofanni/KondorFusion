@@ -1,12 +1,7 @@
 package strategies;
 
 import runParser.Parser;
-import runParser.ParserAbs;
 import strategies.basic.*;
-import utils.CustomPair;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 public class MainTestStrategy {
 
@@ -15,35 +10,35 @@ public class MainTestStrategy {
         pa.readAndNormalize("/home/marco/Scrivania/test");
         pa.printRuns();
 
+        System.out.println("CombMIN results --------------------");
         CombMINStrategy cmin = new CombMINStrategy();
         cmin.combMIN(pa.getRuns());
         cmin.printResults();
 
-        //CombANZStrategy canz = new CombANZStrategy();
-
-      /*  Map<Integer, ArrayList<CustomPair<String, Double>>> minMap = CombMINStrategy.combMIN(pa.getLinesHash());
-        System.out.println("CombMIN results --------------------");
-        CombMINStrategy.printMap(minMap);
-
-        Map<Integer, ArrayList<CustomPair<String, Double>>> maxMap = CombMAXStrategy.combMAX(pa.getLinesHash());
         System.out.println("CombMAX results --------------------");
-        CombMINStrategy.printMap(maxMap);
+        CombMAXStrategy cmax = new CombMAXStrategy();
+        cmax.combMAX(pa.getRuns());
+        cmax.printResults();
 
-        Map<Integer, ArrayList<CustomPair<String, Double>>> sumMap = CombSUMStrategy.combSUM(pa.getLinesHash());
         System.out.println("CombSUM results --------------------");
-        CombMINStrategy.printMap(sumMap);
+        CombSUMStrategy csum = new CombSUMStrategy();
+        csum.combSUM(pa.getRuns());
+        csum.printResults();
 
-        Map<Integer, ArrayList<CustomPair<String, Double>>> medMap = CombMEDStrategy.combMED(pa.getLinesHash());
         System.out.println("CombMED results --------------------");
-        CombMINStrategy.printMap(medMap);*/
+        CombMEDStrategy cmed = new CombMEDStrategy();
+        cmed.combMED(pa.getRuns());
+        cmed.printResults();
 
-        //canz.combANZ(pa.getLinesHash());
-       // System.out.println("CombANZ results --------------------");
-        //CombMINStrategy.printMap(anzMap);
+        System.out.println("CombANZ results --------------------");
+        CombANZStrategy canz = new CombANZStrategy();
+        canz.combANZ(pa.getRuns());
+        canz.printResults();
 
-     /*   Map<Integer, ArrayList<CustomPair<String, Double>>> mnzMap = CombMNZStrategy.combMNZ(pa.getLinesHash());
         System.out.println("CombMNZ results --------------------");
-        CombMINStrategy.printMap(mnzMap); */
+        CombMNZStrategy cmnz = new CombMNZStrategy();
+        cmnz.combMNZ(pa.getRuns());
+        cmnz.printResults();
 
     }
 }
