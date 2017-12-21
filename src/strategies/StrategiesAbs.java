@@ -1,11 +1,7 @@
 package strategies;
 
-import utils.CustomPair;
 import utils.Document;
-
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public abstract class StrategiesAbs {
 
@@ -13,18 +9,19 @@ public abstract class StrategiesAbs {
 
 
     public static void sort(ArrayList<Document> documents) {
-        documents.sort(new CustomComparator());
+        documents.sort(new CustomComparator()); //sort documents per topic per score
         int rank = 0;
         int oldTop = Integer.MIN_VALUE;
 
-        //TODO da sistemare rank!!!!!!!!!!!!!!!!!
+        //set ranks in each document per topic
         for(Document doc : documents){
-            doc.setRank(rank);
-            if(oldTop != doc.getTopic() && oldTop != Integer.MIN_VALUE){
+
+            if(oldTop != doc.getTopic()){
                 rank = 0;
-                oldTop = doc.getTopic();
             }
+            doc.setRank(rank);
             rank++;
+            oldTop = doc.getTopic();
         }
     }
 
@@ -33,17 +30,5 @@ public abstract class StrategiesAbs {
             System.out.println(doc.toString());
         }
     }
-
-//    public static void printMap(Map<Integer, ArrayList<CustomPair<String, Double>>> m){
-//
-//        for(Integer topic : m.keySet()){
-//            ArrayList<CustomPair<String, Double>> docScores = m.get(topic);
-//
-//            for (CustomPair<String, Double> c: docScores) {
-//                System.out.println("Topic:" + topic + " document:" + c.getFst() + " score:" + c.getSnd());
-//            }
-//        }
-//
-//    }
 }
 
