@@ -54,22 +54,12 @@ public class CustomCondorcet extends CondorcetAbs{
              rank1 = ranksDoc1[runIndex].getRank();
              rank2 = ranksDoc2[runIndex].getRank();
 
-             //deal with null values which may occur when docIdx is not returned in run runIndex
-             //this implementation privileges the first keys in the map, i.e. the first run
-             //
-             // example:
-             // doc1 R={100,null}, doc2 R={null, 1} are considered as equal,
-             // but are they actually? Other Ideas?
-             //
-
              if(rank1 == null || rank2 == null) {
                  if(rank2 == null) {
                      count++;
-                     //count=count+5; //test: null value for docId2 in a run counts five weights for docId1
                  }
                  if(rank1 == null) {
                      count--;
-                     //count=count-5;
                  }
              }
 
