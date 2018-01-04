@@ -21,22 +21,18 @@ public class CondorcetComparator implements Comparator<CondorcetValue> {
             if(rank1 == null || rank2 == null) {
                 if(rank2 == null) {
                     count++;
-                    //count=count+rank1;
                 }
                 if(rank1 == null) {
                     count--;
-                    //count=count-rank2;
                 }
             }
 
             else {
                 if(rank1 < rank2){
                     count++; //docId1 is more relevant than docId2 in run runIndex
-                    //count = count+(rank2 - rank1);
                 }
                 else if(rank1 > rank2){
                     count--; //docId1 is less relevant than docId2 in run runIndex
-                    //count = count + (rank1 - rank2);
                 }
             }
         }
