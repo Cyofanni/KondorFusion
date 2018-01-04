@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class Condorcet extends CondorcetAbs{
 
+    public Condorcet(){
+        runId = "Condorcet";
+    }
     //compute Algorithm 3 of condorcet 2002 paper
     //this implementation uses a List of CondorcetValue which must be filled and sorted with CondorcetComparator
     //then documents are orderly inserted in results, and ranks are finally computed
@@ -40,7 +43,7 @@ public class Condorcet extends CondorcetAbs{
 
     public static void main(String[] args) {
         Parser pa = new Parser();
-        pa.readAndNormalize("/home/davide/Desktop/test");
+        pa.readAndNormalize("/home/marco/Scrivania/run");
         pa.printRuns();
 
         Condorcet con = new Condorcet();

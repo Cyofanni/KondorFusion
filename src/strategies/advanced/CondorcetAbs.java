@@ -7,12 +7,13 @@ import java.util.List;
 
 public abstract class CondorcetAbs {
     protected ArrayList<Document> results = new ArrayList<>();
+    protected String runId;
 
     public abstract void condorcetFuse(List<Topic> runs);
 
     public void printResults(){
         for (Document doc: results) {
-            System.out.println(doc.toString());
+            System.out.println(doc.toString() + " " + runId);
         }
     }
 
