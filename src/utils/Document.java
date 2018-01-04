@@ -20,6 +20,6 @@ public class Document extends Value{
     }
 
     public String toString(){
-        return topic + " " + docId + " " + rank + " " + score;
+        return topic + " Q0" + docId + " " + rank + " " + score;
     }
 }
