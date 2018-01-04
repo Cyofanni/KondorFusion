@@ -31,7 +31,7 @@ public class Condorcet extends CondorcetAbs{
                 }
                 temp.add(new CondorcetValue(t.getTopic(), document, ranks));
             }
-            temp.sort(new CondorcetComparator());
+            temp.sort(new CondorcetComparator()); //-Djava.util.Arrays.useLegacyMergeSort=true
             for (CondorcetValue v: temp) {
                 //scores not defined in Condorcet fusion technique, ranks computed later
                 results.add(new Document(t.getTopic(), v.getDocument(), -1, null));
@@ -44,7 +44,7 @@ public class Condorcet extends CondorcetAbs{
     public static void main(String[] args) {
         Parser pa = new Parser();
         pa.readAndNormalize("/home/marco/Scrivania/run");
-        pa.printRuns();
+        //pa.printRuns();
 
         Condorcet con = new Condorcet();
         con.condorcetFuse(pa.getRuns());
