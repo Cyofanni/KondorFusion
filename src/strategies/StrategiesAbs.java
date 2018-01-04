@@ -4,9 +4,8 @@ import utils.Document;
 import java.util.ArrayList;
 
 public abstract class StrategiesAbs {
-
+    protected String runId;
     protected ArrayList<Document> results = new ArrayList<>();
-
 
     public static void sort(ArrayList<Document> documents) {
         documents.sort(new CustomComparator()); //sort documents per topic per score
@@ -27,7 +26,7 @@ public abstract class StrategiesAbs {
 
     public void printResults(){
         for (Document doc: results) {
-            System.out.println(doc.toString());
+            System.out.println(doc.toString()+" "+runId);
         }
     }
 }

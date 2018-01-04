@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CombMINStrategy extends StrategiesAbs {
+    public CombMINStrategy(){
+        runId = "combMIN";
+    }
 
     public void combMIN(List<Topic> runs){
 

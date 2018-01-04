@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CombANZStrategy extends StrategiesAbs {
+    public CombANZStrategy(){
+        runId = "combANZ";
+    }
 
     public void combANZ(List<Topic> runs){
 

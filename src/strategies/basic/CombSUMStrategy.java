@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CombSUMStrategy extends StrategiesAbs {
+    public CombSUMStrategy(){
+        runId = "combSUM";
+    }
 
     public void combSUM(List<Topic> runs){
 

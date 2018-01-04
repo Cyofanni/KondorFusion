@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CombMAXStrategy extends StrategiesAbs {
+    public CombMAXStrategy(){
+        runId = "combMAX";
+    }
 
     public void combMAX(List<Topic> runs){
 
