@@ -1,19 +1,27 @@
-package strategies;
+package strategies.advanced;
 
 import utils.Document;
+import utils.Topic;
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class StrategiesAbs {
-    protected String runId;
+public abstract class CondorcetAbs {
     protected ArrayList<Document> results = new ArrayList<>();
 
-    public static void sort(ArrayList<Document> documents) {
-        documents.sort(new CustomComparator()); //sort documents per topic per score
+    public abstract void condorcetFuse(List<Topic> runs);
+
+    public void printResults(){
+        for (Document doc: results) {
+            System.out.println(doc.toString());
+        }
+    }
+
+    protected void computeRanks(ArrayList<Document> docs) {
         int rank = 0;
         int oldTop = Integer.MIN_VALUE;
 
         //set ranks in each document per topic
-        for(Document doc : documents){
+        for(Document doc : docs){
 
             if(oldTop != doc.getTopic()){
                 rank = 0;
@@ -21,12 +29,6 @@ public abstract class StrategiesAbs {
             doc.setRank(rank);
             rank++;
             oldTop = doc.getTopic();
-        }
-    }
-
-    public void printResults(){
-        for (Document doc: results) {
-            System.out.println(doc.toString()+" "+runId);
         }
     }
 }
