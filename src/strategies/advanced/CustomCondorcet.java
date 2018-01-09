@@ -57,7 +57,7 @@ public class CustomCondorcet extends CondorcetAbs{
          for (int i = 0; i<left.length; i++)
              left[i] = values[i];
          for (int i = 0; i<right.length; i++)
-                 right[i] = values[i];
+                 right[i] = values[mid+i];
 
          sort(left);
          sort(right);
