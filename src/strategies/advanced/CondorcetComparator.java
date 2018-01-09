@@ -38,14 +38,14 @@ public class CondorcetComparator implements Comparator<CondorcetValue> {
         }
 
         if(count > 0) {
-            System.out.println("document "+doc1.getDocument()+" ranks above to document "+doc2.getDocument()+" count "+count);
+            //System.out.println("document "+doc1.getDocument()+" ranks above to document "+doc2.getDocument()+" count "+count);
             return -1;
         }
         if(count == 0) {
-            System.out.println("document "+doc1.getDocument()+" ranks equal to document "+doc2.getDocument()+" count "+count);
+            //System.out.println("document "+doc1.getDocument()+" ranks equal to document "+doc2.getDocument()+" count "+count);
             return 0;
         }
-        System.out.println("document "+doc1.getDocument()+" ranks below document "+doc2.getDocument()+" count "+count);
+        //System.out.println("document "+doc1.getDocument()+" ranks below document "+doc2.getDocument()+" count "+count);
         return 1;
     }
 }
