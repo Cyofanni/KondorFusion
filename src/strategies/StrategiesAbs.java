@@ -24,10 +24,12 @@ public abstract class StrategiesAbs {
         }
     }
 
-    public void printResults(){
+    public String toString(){
+        StringBuilder r = new StringBuilder();
         for (Document doc: results) {
-            System.out.println(doc.toString()+" "+runId);
+            r.append(doc.toString()+" "+runId + "\n");
         }
+        return r.toString();
     }
 }
 
